@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Richel 💙</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<audio id="bg-music" autoplay loop muted>
+    <source src="assets/audio/music.mp3" type="audio/mp3">
+</audio>
+
+<div class="grain"></div>
+<div id="particles"></div>
+
+<!-- HERO -->
+<section class="hero">
+    <img src="assets/hero.jpg" class="hero-img">
+    <div class="hero-text">
+        <h1 id="typewriter"></h1>
+        <p>My cute Valentine 💙</p>
+    </div>
+</section>
+
+<!-- SCRAPBOOK -->
+<section class="scrapbook">
+    <h2>Our Moments</h2>
+
+    <div class="memory">
+        <img src="assets/photos/photo1.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="Novotel Airport — the place I “accidentally” stole your attention 😎. Official on 2nd of September 2025 😉."></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo2.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="In case you ever forget, September 9 is our first date. No regrets 😌"></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo3.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="Our first Christmas celebrated with my cousins. You staying sober and sane? Impressive 😂 - December 2025"></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo4.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="First date in December. Last date of the year. I swore I’d never eat chicken again after this… but that was a lie 😂 "></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo5.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="Best New Year with my favorite person — cheers to 2026 with you."></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo6.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="Our first date of the year at your favorite place. I love it here — next time I’ll wear shorts, and I hope you’ll wear your bikini 😉 -29 Jan 2026"></textarea>
+    </div>
+
+    <div class="memory">
+        <img src="assets/photos/photo7.jpg" onclick="openLightbox(this.src)">
+        <textarea placeholder="Not our first time here… but our first photo together? 🤔"></textarea>
+    </div>
+</section>
+
+<!-- SECRET -->
+<section class="secret-lock">
+    <img src="assets/bell.png" id="bell">
+    <p>Tap Doraemon's bell to unlock</p>
+</section>
+
+<section class="secret" id="secret">
+    <h3>To My Richel,</h3><br>
+    <p>
+        This scrapbook holds our first times together, <br>and I’m hoping and praying for more firsts we can add here.
+        You are my safest place.
+        My favorite notification.
+        My peace.
+        My forever.
+        <br><br>
+        Happy Valentine’s Day, my love 😘<br><br><br>
+
+        PS: Got your favorite music... you're welcome 😉
+    </p>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img">
+</div>
+
+<!-- STICKERS -->
+<img src="assets/sticker1.png" class="sticker s1">
+<img src="assets/sticker2.png" class="sticker s2">
+
+<script src="script.js"></script>
+</body>
+</html>
