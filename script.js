@@ -14,6 +14,14 @@ function typeWriter() {
 }
 typeWriter();
 
+// Hero subtle parallax
+window.addEventListener("scroll", () => {
+    const heroImg = document.querySelector(".hero-img");
+    let offset = window.scrollY * 0.3;
+    heroImg.style.transform = `translateY(${offset}px)`;
+});
+
+
 
 // =============================
 // LIGHTBOX
@@ -37,43 +45,56 @@ const music = document.getElementById("bg-music");
 
 let isUnlocked = false;
 
-function toggleSecret(e) {
-    e.preventDefault(); // prevents double trigger on mobile
+bell.addEventListener("click", function () {
 
     if (!isUnlocked) {
-        // SHOW SECRET
+
         secret.style.display = "block";
 
-        // Play music (allowed because triggered by tap)
-        music.play().catch(err => {
-            console.log("Playback blocked:", err);
-        });
+        // Mobile-safe play
+        music.volume = 0;
+        const playPromise = music.play();
 
-        // Stop shaking + glow
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Smooth fade in
+                let fade = setInterval(() => {
+                    if (music.volume < 0.9) {
+                        music.volume += 0.05;
+                    } else {
+                        clearInterval(fade);
+                    }
+                }, 120);
+            }).catch(() => {
+                console.log("User interaction required");
+            });
+        }
+
         bell.style.animation = "none";
-        bell.style.filter = "drop-shadow(0 0 15px rgba(0,150,255,0.9))";
+        bell.style.filter = "drop-shadow(0 0 18px rgba(0,200,255,0.9))";
 
         isUnlocked = true;
 
     } else {
-        // HIDE SECRET
+
+        // Fade out smoothly
+        let fade = setInterval(() => {
+            if (music.volume > 0.05) {
+                music.volume -= 0.05;
+            } else {
+                clearInterval(fade);
+                music.pause();
+                music.currentTime = 0;
+            }
+        }, 120);
+
         secret.style.display = "none";
-
-        // Stop and reset music
-        music.pause();
-        music.currentTime = 0;
-
-        // Resume shaking
         bell.style.animation = "bellShake 0.8s infinite ease-in-out";
         bell.style.filter = "none";
 
         isUnlocked = false;
     }
-}
-
-// Support mobile + desktop safely
-bell.addEventListener("click", toggleSecret);
-bell.addEventListener("touchstart", toggleSecret);
+});
 
 
 // =============================
@@ -125,3 +146,66 @@ function updateParticles() {
 }
 
 setInterval(drawParticles, 33);
+
+// Scroll reveal with depth
+const memories = document.querySelectorAll(".memory");
+
+function revealMemories() {
+    memories.forEach((memory, index) => {
+        const rect = memory.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85){
+            setTimeout(() => {
+                memory.classList.add("show");
+            }, index * 150);
+        }
+    });
+}
+
+
+window.addEventListener("scroll", revealMemories);
+revealMemories();
+
+memories.forEach(card => {
+
+    function handleMove(x, y) {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = -(y - centerY) / 15;
+        const rotateY = (x - centerX) / 15;
+
+        card.style.transform = `
+            perspective(800px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            scale(1.03)
+        `;
+    }
+
+    // Desktop
+    card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        handleMove(e.clientX - rect.left, e.clientY - rect.top);
+    });
+
+    // Mobile
+    card.addEventListener("touchmove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const touch = e.touches[0];
+        handleMove(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+
+    // Reset
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
+    });
+
+    card.addEventListener("touchend", () => {
+        card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
+    });
+
+});
+
+
+
