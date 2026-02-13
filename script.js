@@ -153,7 +153,7 @@ const memories = document.querySelectorAll(".memory");
 function revealMemories() {
     memories.forEach((memory, index) => {
         const rect = memory.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85){
+        if (rect.top < window.innerHeight - 100) {
             setTimeout(() => {
                 memory.classList.add("show");
             }, index * 150);
@@ -167,8 +167,12 @@ revealMemories();
 
 memories.forEach(card => {
 
-    function handleMove(x, y) {
+    card.addEventListener("mousemove", (e) => {
+
         const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
@@ -181,31 +185,12 @@ memories.forEach(card => {
             rotateY(${rotateY}deg)
             scale(1.03)
         `;
-    }
-
-    // Desktop
-    card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        handleMove(e.clientX - rect.left, e.clientY - rect.top);
     });
 
-    // Mobile
-    card.addEventListener("touchmove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const touch = e.touches[0];
-        handleMove(touch.clientX - rect.left, touch.clientY - rect.top);
-    });
-
-    // Reset
     card.addEventListener("mouseleave", () => {
         card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
     });
 
-    card.addEventListener("touchend", () => {
-        card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
-    });
-
 });
-
 
 
